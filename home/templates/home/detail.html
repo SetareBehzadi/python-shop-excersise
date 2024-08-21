@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+
+{% block title %}
+Product {{product.name }}
+{%endblock%}
+
+{% block content %}
+<h2>
+    {{product.name}}
+</h2>
+<small>{{product.created_at}}</small><br>
+<p>{{product.price}}</p>
+<p>
+{% for cat in product.category.all %}
+<h5 style="display:inline-block">{{cat.name}} | </h5>
+{% endfor %}
+</p>
+<img src="{{product.image.url}}" alt="">
+<p>{{product.description}}</p>
+<p>
+<form action="{% url 'order:cart' product.id %}" method="post">
+    {% csrf_token %}
+    {{form}}
+    <input type="submit" value="add to cart">
+</form>
+</p>
+
+
+{%endblock%}
